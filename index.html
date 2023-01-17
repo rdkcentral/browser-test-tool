@@ -1,0 +1,128 @@
+<!-- /*
+ * Copyright 2021 Comcast Cable Communications Management, LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="no-cache" http-equiv="Cache-Control"/>
+    <meta http-equiv="Expires" content="0" />
+    <meta http-equiv="Pragma" content="no-cache" />
+
+    <title>Assets</title>
+
+    <script src="js/lib/lightning-inspect.js"></script>
+    <script src="js/lib/lightning-web.js"></script>
+    <script src="./js/src/ux.js" type="module"></script>
+
+    <!-- DASH.JS -->
+<!--  stopped working  <script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>-->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/dashjs/2.9.3/dash.all.min.js"></script>
+<!--    //cdn.jsdelivr.net/npm/dashjs@2.9.3/dist/dash.all.debug.js-->
+
+    <!-- HLS.JS -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@0.13.2/dist/hls.js"></script>
+<!--    <script src="//cdn.jsdelivr.net/npm/hls.js@0.12.4/dist/hls.min.js"></script>-->
+
+
+    <!-- SHAKA PLAYER COMPILED -->
+    <script src="node_modules/eme-encryption-scheme-polyfill/dist/eme-encryption-scheme-polyfill.js"></script>
+    <script src="node_modules/shaka-player/dist/shaka-player.compiled.debug.js"></script>
+
+    <script src="assets.js"></script>
+
+    <style>
+        *,body{
+            margin:0;
+            padding:0;
+        }
+
+        canvas {
+            position: absolute;
+            z-index: 2;
+        }
+
+        body {
+            background: transparent;
+        }
+    </style>
+
+</head>
+<body>
+<script type="module">
+    import AppDefinition from "./apps/com.comcast.app.PlayersTesting/AppDefinition.js";
+
+    const fontFaces = [
+        new FontFace('RobotoRegular', 'url(./fonts/roboto-regular.ttf)'),
+        new FontFace('RobotoLight', 'url(./fonts/roboto-light.ttf)'),
+    ];
+
+    Promise.all(fontFaces.map(ff => {
+        document.fonts.add(ff);
+        return document.fonts.load('10px "' + ff.family + '"', '.')
+    })).then(function() {
+
+        // The specified key code will fire the _handle{Name} event in the focused component.
+        const navigationKeys = {
+            8: "Back",
+            13: "Enter",
+            27: "Menu",
+            37: "Left",
+            38: "Up",
+            39: "Right",
+            40: "Down",
+            174: "ChannelDown",
+            175: "ChannelUp",
+            178: "Stop",
+            250: "PlayPause",
+            191: "Search", // Use "/" for keyboard
+            409: "Search"
+        };
+
+        const memoryPressure = parseInt(ux.Ui.getOption('memoryPressure')) || 16e6
+        console.log('GPU memory pressure: ' + memoryPressure);
+
+        const options = {stage: {w: 1920, h: 1080, clearColor: 0x00000000, canvas2d: false},
+            debug: true,
+            keys: navigationKeys};
+
+        const config = options.stage;
+        if (ux.Ui.hasOption("720") || window.innerHeight === 720) {
+            config['w'] = 1280;
+            config['h'] = 720;
+            config['precision'] = 0.6666666667;
+        } else {
+            config['w'] = 1920;
+            config['h'] = 1080;
+
+            config.useImageWorker = true;
+
+            try {
+                // attachInspector(lng);
+            } catch(e) {}
+        }
+
+        const bootstrap = new ux.Ui(options);
+        bootstrap.startApp(new AppDefinition(bootstrap));
+        const canvas = bootstrap.stage.getCanvas();
+        document.body.appendChild(canvas);
+
+        window.app = bootstrap;
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+#jetbrain's idea files
+.idea
+build/*
+dist/*

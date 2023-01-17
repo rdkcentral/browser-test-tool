@@ -1,0 +1,27 @@
+{
+  "name": "browser-test-tool",
+  "version": "1.0.0",
+  "description": "DASH and HLS Test Assets Library",
+  "main": "index.html",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "eme-encryption-scheme-polyfill": "2.0.1",
+    "shaka-player": "3.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rdkcentral/browser-test-tool.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rdkcentral/browser-test-tool/issues"
+  },
+  "homepage": "https://github.com/rdkcentral/browser-test-tool#README.md",
+  "author": "",
+  "license": "Apache-2.0"
+}
