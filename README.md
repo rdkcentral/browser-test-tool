@@ -1,12 +1,14 @@
-# Players
+# Browser Test Tool(B2T)
 
-The project shares the list of adaptive media formats(HLS, DASH) and DRM protected contents(Widevine, PlayReady, Multi-DRM, Clear Key) that can be played in browser using the provided list of Java Script players. The list of supported Java Script players are,
+The App shares the list of adaptive media formats(HLS, DASH) and DRM-protected contents(Widevine, PlayReady, Multi-DRM, Clear Key) that can be played in the browser and all supported Devices using the provided list of Java Script players. App is created using the Lightning and the assets are displayed in Simple Swimlane structure. The app supports only Keyboard navigation and Mouse supported is not available for now(Planned Later).
+
+### Media-Players Supported
 - Shaka Player
 - AAMP UVE
 - Dash.js
 - HLS.js
 
-Available video contents are of,
+### Video Contents Available
 - Live
 - 4K
 - HD
@@ -17,52 +19,33 @@ Available video contents are of,
 - DASH
 - HLS
 
-# Development setup
+## Prerequisites
 
-Follow below instruction to setup the server locally.
-```
-git clone git@github.comcast.com:WPE-Test-Harness/players.git
-cd players
+You need NodeJS + NPM ([https://nodejs.org](https://nodejs.org)) installed.
+
+## Development setup
+
+Follow below instruction to get started
+
+git clone https://github.com/rdkcentral/browser-test-tool.git
+cd browser-test-tool
 npm install
 npm install -g instant-server
 instant -p 8080
-```
-##
 
-# Production environment
+Now the app will be compiled and started. Open any WebBrowser and launch http://<machine-ip>:8080
 
-## Apache Deployment Location
-```language
-/mnt/webtests-www/players/
-```
-## Deployment steps
-```language
-sudo cd /mnt/webtests-www/players/
-sudo git clone git@github.comcast.com:WPE-Test-Harness/players.git
-sudo mv players version10
-cd version10
-sudo npm install
-sudo apachectl restart
-```
+## Switching the Players
+Once the App is launched please press below keyboard/Remote Keys for using different media players
+1 - SHAKA
+2 - AAMP 
+3 - DASH.JS
+4 - HLS.JS 
 
+## Media Player Versions
+* Shaka - 3.0.2
+* AAMP - Depends on the Firmware
+* DashJS - 2.9.3
+* HlsJS - 0.13.2
 
-# Release History
-
-## Version 10
-
-- Shaka player upgraded to 3.0.2 version
-- Shaka player is added to project as a npm package
-- Further update of Shaka player is possible using command
-`npm update shaka-player`
-
-## Version 9
-
-- run-time switching between players using keys: 1,2,3,4
-- Shaka: added installing poyfills
-- Shaka: decreased buffer sized to support 4K within WPE mem settings
-- Shaka: added on-screen stats
-- Dash.js: added on-screen stats
-- AAMP: seeking support added
-
-Shaka version: custom based on
-DASH.js version: 2.9.3
+If you need to update any media players please do changes in package.json and index.html files respectively.
